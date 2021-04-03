@@ -1,0 +1,165 @@
+---
+title: "STATS 250 Lab 10 Report"
+author: "YOUR NAME GOES HERE IN QUOTES"
+date: "TODAY'S DATE GOES HERE IN QUOTES"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_collapsed: true
+    theme: lumen
+    css: assets/styles.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+source("plot_t.R") # This imports the plot_t() function
+```
+
+# Instructions
+
+Welcome to Lab 10! Complete the following exercises designed to help you understand the simulation process for making inference about a population proportion. It is important that you keep your answers inside the ".answer" blocks. Do NOT delete the three colon blocks (:::) and keep your responses between them. Use the tutorial for help, and feel free to ask questions on Piazza or email your lab instructor.
+
+Depending on your instruction method (synchronous or asynchronous), complete the following exercises collaboratively.
+
+1. **Synchronous remote:** Work with your peers in breakout rooms during the synchronous lab.
+1. **Asynchronous remote:** Use Piazza for asynchronous collaboration.
+
+**Collaborators:** If applicable, replace this text with the names of anyone you collaborated with on this project.
+
+**NOTE:** If you perform a calculation in R and assign it a name but do not print the value in your knitted document, we reserve the right to deduct points.
+
+# Background
+
+:::{.background}
+In 2004, the state of North Carolina released a large data set containing information on births recorded in this state. This data set is useful to researchers studying relationships between habits and practices of expectant mothers and the birth of their children. We will work with a random sample of observations from this data set.
+:::
+
+## Question 1
+
+:::{.question}
+Consider a set of data containing a random sample of birthweights from North Carolina mothers in 2004 who self-reported being a smoker. Then consider a set of data containing a random sample of birthweights from North Carolina mothers in 2004 who self-reported not being a smoker. Do you think these two sets of data meet both conditions of independence? Why or why not?
+:::
+
+:::{.answer}
+Replace this text with your answer to Question 1.
+:::
+
+## Question 2
+
+:::{.question}
+Do newborns born to mothers who smoke have a different average birthweight than those born to mothers who don't smoke? Write the appropriate hypotheses for addressing the research question *using symbols only*. 
+:::
+
+:::{.answer}
+$H_0$: replace this text with your null hypothesis in symbols
+
+$H_A$: replace this text with your alternative hypothesis in symbols
+
+:::
+
+## Question 3
+
+:::{.question}
+Check the remaining condition necessary (we already checked independence in Question 1) for performing this hypothesis test. Note that the names of the relevant variables are `weight` (for birthweight) and `habit` (for smoking status). Then discuss whether your condition was reasonably met or not.
+:::
+
+:::{.answer}
+```{r question3, error = T}
+# Replace this comment with code required for Question 3. (Remember that this text is a comment, so R ignores it; you can delete it if you want.) If you don't delete it, **start your code on a new line that doesn't start with #**
+
+```
+
+Replace this text with your discussion about whether the condition was reasonably met or not.
+:::
+
+
+## Question 4
+
+:::{.question}
+Perform the hypothesis test using `t.test()`. Report your test statistic, degrees of freedom, and p-value below.
+:::
+
+:::{.answer}
+```{r question4, error = T}
+# Replace this comment with code required for Question 4. (Remember that this text is a comment, so R ignores it; you can delete it if you want.) If you don't delete it, **start your code on a new line that doesn't start with #**
+
+```
+
+- The value of the test statistic is **replace this with your test statistic value**.
+- The degrees of freedom are **replace this with your degrees of freedom**.
+- The p-value is **replace this with your p-value**.
+
+:::
+
+## Question 5
+:::{.question}
+Use `plot_t()` to create an appropriate visualization of the test statistic and p-value you found in Question 4.
+:::
+
+:::{.answer}
+
+```{r question5, error = T}
+# Replace this comment with code required for Question 5. (Remember that this text is a comment, so R ignores it; you can delete it if you want.) If you don't delete it, **start your code on a new line that doesn't start with #**
+
+```
+:::
+
+## Question 6
+:::{.question}
+What is the point estimate for this research question? Use R to help you find the value. Then report your value with the appropriate symbol.
+
+```{r question6, error = T}
+# Replace this comment with code required for Question 6. (Remember that this text is a comment, so R ignores it; you can delete it if you want.) If you don't delete it, **start your code on a new line that doesn't start with #**
+
+```
+:::
+
+:::{.answer}
+The symbol for the point estimate is **replace this with the symbol** and the value for the point estimate is **replace this with the value**.
+:::
+
+## Question 7
+
+:::{.question}
+Find the $t^*$ value needed to create a 98% confidence interval for this data. That is, using the degrees of freedom you found in Question 4, find the quantiles of the $t(df)$ distribution such that 98% of the data is between those two numbers. Include an appropriate visualization using `plot_t()`.
+:::
+
+:::{.answer}
+```{r question7, error = T}
+# Replace this comment with code required for Question 7. (Remember that this text is a comment, so R ignores it; you can delete it if you want.) If you don't delete it, **start your code on a new line that doesn't start with #**
+
+```
+:::
+
+## Question 8
+
+:::{.question}
+Now consider that the researchers wish to analyse the average age difference for the mother and the father of a child. The data was collected such that for each child born in North Carolina in 2004, both the mother's age and the father's age are reported, then a random sample of these children is taken to report the data. Do you think these two sets of information meet both conditions of independence? Why or why not?
+:::
+
+:::{.answer}
+Replace this text with your answer to Question 8.
+:::
+
+## Wrap-Up and Submission
+
+At the top of the document, make sure you've changed the `author` field to your name (in quotes!). If you'd like, change the date as well.
+
+**When you've finished the lab, click the Knit button one last time.**
+
+
+### Submission instructions
+#### If you're using RStudio Cloud
+1. In the Files pane, check the box next to `lab09-report.html`.
+2. Click More > Export...
+3. Click Download and save the file on your computer in a folder you'll remember and be able to find later. You can just call the file `lab09-report.html` or whatever else you'd like (as long as you remember what you called it).
+
+#### If you're using RStudio installed on your computer
+1. locate the `lab09-report.html` file on your computer. The file will be saved in the location indicated at the top of the files pane.
+
+#### Submission to Canvas
+
+1. Click the "Assignments" panel on the left side of the page. Scroll to find "Lab 9", and open the assignment. Click "Submit Assignment". 
+2. Towards the bottom of the page, you'll be able to choose `lab09-report.html` from the folder you saved it in from RStudio Cloud or noted if you're using RStudio Desktop. **You will only be able to upload a .html file -- do not upload any other file type.**
+  3. Click "Submit Assignment". You're done! 

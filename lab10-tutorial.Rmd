@@ -1,0 +1,297 @@
+---
+title: "STATS 250 Lab 10"
+author: "Lab Dream Team"
+date: "Week of 4/5/2021"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_collapsed: true
+    theme: lumen
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+source("plot_t.R")
+```
+
+# Learning Objectives
+
+## Statistical Learning Objectives
+1. Continue discussing quantitative data, this week in regards to a paired mean and a difference in two means scenario.
+1. Understand whether data is considered paired or from two independent samples.
+
+## R Learning Objectives
+1. Interpret R output providing confidence intervals and hypothesis tests for inference on population means.
+
+## Functions covered in this lab
+1. `pt()`
+1. `qt()`
+1. `plot_t()` (custom)
+1. `t.test()`
+
+## Weekly Advice
+The function `t.test()` will compute the results for both a hypothesis test and a confidence interval. You should pay close attention to the alternative hypothesis. If you are running a hypothesis test, be sure that the correct direction (`greater`, `less`, `two.sided`) is specified in `t.test()`, otherwise your p-value will be inaccurate. If you are running a confidence interval, be sure that the direction is set to `two.sided`, which can be achieved by leaving the alternative hypothesis as the default. You can double-check your thinking by reading the output - the alternative hypothesis is printed in the 4th line of output.
+  
+# Lab Tutorial
+
+This week, we're talking about inference when data from 2 **numeric** variables are collected, in order to estimate some kind of a **mean**. Let's first revisit the conditions that we discussed last week. 
+
+## Conditions for Inference on One Population Mean
+
+In order to use the $t$ distribution for constructing confidence intervals and performing hypothesis tests for means, we need two conditions to hold. 
+
+1. The observations within the sample are independent.
+2. The observations are from a population with a nearly normal distribution.
+
+What happens if we end up collecting data from 2 numeric variables? How does this affect our conditions for inference?
+
+## Independence
+
+The first question we have to ask ourselves, when dealing with 2 numeric variables: are the two sets of observations independent of **one another**, such that observations in one sample tell us nothing about the observations in the other sample (and vice versa)?
+
+If the answer is **yes**, then the appropriate method of inference is to keep the data separate and discuss **a difference in two population means**.
+
+If the answer is **no**, then the appropriate method of inference is to pair the data and discuss **a population mean of the differences**.
+
+Let's give it a try. 
+
+## Independent or Not?
+
+Let us fondly recall the delicious chocolate chip cookies at the Mosher-Jordan (MoJo) dining hall. For each description of a research question below, decide whether the two sets of data were collected such that the observations are independent of one another.
+
+### Scenario 1
+
+Does MoJo cure homesickness? A UM student is interested in seeing if perhaps cookies are just a fond memory for freshman students embarking on their first semester away from home. She gathers a large random sample of UM freshmen students, to ask whether or not they enjoy the cookies at MoJo. Next, she gathers a large random sample of UM students who are not freshmen, to ask whether or not they enjoy the cookies at MoJo. She hopes to compare the differences in these two rates.
+
+(a) The data contained in the two variables are independent of one another.
+(b) The data contained in the two variables are not independent of one another.
+
+The answer is *replace this text with your answer* because *replace this text with your reasoning*.
+
+### Scenario 2
+
+Are more cookies made at MoJo than at East Quad, on average? A UM student decides to select a random sample of 30 days from the Winter 2019 semester. For each of those 30 days, they ask each dining hall to report the number of cookies baked. These results will be used to assess whether more cookies are made at MoJo than at East Quad, on average.
+
+(a) The data contained in the two variables are independent of one another.
+(b) The data contained in the two variables are not independent of one another.
+
+The answer is *replace this text with your answer* because *replace this text with your reasoning*.
+
+### Scenario 3
+
+Who has the tastiest cookies? A UM student decides to stop by MoJo to get 40 freshly baked cookies, then stops at East Quad for another 40 freshly baked cookies. She then gets a random sample of 40 UM freshmen, and has them each take a blind taste test. They will taste each cookie, one at a time, without knowing its origin, and select the cookie they like the most. The UM student would like to see if a majority pick MoJo cookies as the tastiest. 
+
+(a) The data contained in the two variables are independent of one another.
+(b) The data contained in the two variables are not independent of one another.
+
+The answer is *replace this text with your answer* because *replace this text with your reasoning*.
+
+### Scenario 4
+
+Do athletes love cookies? As a follow up to a previous observation, a UM student decides that it might be best to gather data about whether the student is an athlete or not, as the number of cookies they eat in a week might differ, on average. The UM student gathers a large random sample of UM athletes to ask them to self-report the number of cookies they ate at MoJo the week before. Then the UM student gathers a large random sample of UM non-athletes to ask them to self-report the number of cookies they ate at MoJo the week before. 
+
+(a) The data contained in the two variables are independent of one another.
+(b) The data contained in the two variables are not independent of one another.
+
+The answer is *replace this text with your answer* because *replace this text with your reasoning*.
+
+## Name That Parameter!
+
+Now let's apply our results to *Independent or Not* to the following (same) scenarios, plus one more sprinkled in (get it... haha) because we absolutely love MoJo cookies. Remember, if we decided earlier that the data in the two variables was collected **independently** of one another, we would keep the data separate and analyze the differences in the two groups. If we decided earlier that the data in the two variables was **not** collected **independently**, we would **pair** the data together.
+
+### Scenario 1
+
+Do you get cookies with your dinner? A UM student decided to stop by MoJo one day at dinner, and asks each student to report the number of cookies they ate while at MoJo. From this data, an appropriate random sample will be selected. The UM student wishes to see if on average, the UM students ate more than one cookie at MoJo during their dinner.
+
+(a) $p$
+(b) $p_1 - p_2$
+(c) $\mu$
+(d) $\mu_{\textrm{diff}}$, the population mean of the differences
+(e) $\mu_1 - \mu_2$, the difference in two population means
+
+The answer is *replace this text with your answer* because *replace this text with your reasoning*.
+
+### Scenario 2
+
+Does MoJo cure homesickness? A UM student is interested in seeing if perhaps cookies are just a fond memory for freshman students embarking on their first semester away from home. She gathers a large random sample of UM freshmen students, to ask whether or not they enjoy the cookies at MoJo. Next, she gathers a large random sample of UM students who are not freshmen, to ask whether or not they enjoy the cookies at MoJo. She hopes to compare the differences in these two rates.
+
+(a) $p$
+(b) $p_1 - p_2$
+(c) $\mu$
+(d) $\mu_{\textrm{diff}}$, the population mean of the differences
+(e) $\mu_1 - \mu_2$, the difference in two population means
+
+The answer is *replace this text with your answer* because *replace this text with your reasoning*.
+
+### Scenario 3
+
+Are more cookies made at MoJo than at East Quad, on average? A UM student decides to select a random sample of 30 days from the Winter 2019 semester. For each of those 30 days, they ask each dining hall to report the number of cookies baked. These results will be used to assess whether more cookies are made at MoJo than at East Quad, on average.
+
+(a) $p$
+(b) $p_1 - p_2$
+(c) $\mu$
+(d) $\mu_{\textrm{diff}}$, the population mean of the differences
+(e) $\mu_1 - \mu_2$, the difference in two population means
+
+The answer is *replace this text with your answer* because *replace this text with your reasoning*.
+
+### Scenario 4
+
+Who has the tastiest cookies? A UM student decides to stop by MoJo to get 40 freshly baked cookies, then stops at East Quad for another 40 freshly baked cookies. She then gets a random sample of 40 UM freshmen, and has them each take a blind taste test. They will taste each cookie, one at a time, without knowing its origin, and select the cookie they like the most. The UM student would like to see if a majority pick MoJo cookies as the tastiest. 
+
+(a) $p$
+(b) $p_1 - p_2$
+(c) $\mu$
+(d) $\mu_{\textrm{diff}}$, the population mean of the differences
+(e) $\mu_1 - \mu_2$, the difference in two population means
+
+The answer is *replace this text with your answer* because *replace this text with your reasoning*.
+
+### Scenario 5
+
+Do athletes love cookies? As a follow up to a previous observation, a UM student decides that it might be best to gather data about whether the student is an athlete or not, as the number of cookies they eat in a week might differ, on average. The UM student gathers a large random sample of UM athletes to ask them to self-report the number of cookies they ate at MoJo the week before. Then the UM student gathers a large random sample of UM non-athletes to ask them to self-report the number of cookies they ate at MoJo the week before. 
+
+(a) $p$
+(b) $p_1 - p_2$
+(c) $\mu$
+(d) $\mu_{\textrm{diff}}$, the population mean of the differences
+(e) $\mu_1 - \mu_2$, the difference in two population means
+
+The answer is *replace this text with your answer* because *replace this text with your reasoning*.
+
+## Back to the Penguins!
+
+```{r penguins}
+penguins <- read.csv("https://raw.githubusercontent.com/STATS250SBI/palmerpenguins/master/inst/extdata/penguins_NArm.csv")
+```
+
+Remember this bimodal histogram from last week?
+
+```{r flipperHist}
+hist(penguins$flipper_length_mm,
+     main = "Histogram of Flipper Length",
+     xlab = "Flipper length (mm)",
+     col = "peachpuff")
+```
+
+Bimodal distributions tend to suggest that there's an important subgroup effect happening. It's pretty clear from our knowledge of this data and the bimodal distribution of flipper length that penguin species is probably related to things here.
+
+In the chunk below, take a few minutes to write some code that will help you investigate whether penguin species is related to flipper length. Hint: we know how to make several graphs, like barplots, side-by-side boxplots, scatterplots, or histograms.
+
+```{r investigateSpecies, error = T}
+
+```
+
+We can already sort of tell from this that Gentoo penguins seem to be bigger than Adelie and Chinstrap penguins, so there's probably not much point seeing if their average flipper length is different from one of the other species'. So, let's compare the mean flipper lengths of Adelie and Chinstrap penguins. 
+
+Do you think that the data of flipper length for the Adelie penguins is independent of the data of flipper length for the Chinstrap penguins?
+
+Yes! They are two separate species, with no overlap. Knowing an Adelie penguin's flipper length does not affect the flipper length of a Chinstrap penguin, and vice versa. So we want to proceed to run inference on a **difference in two population means**.
+
+## Difference of Two Population Means Hypothesis Test
+
+Let's formulate some hypotheses.
+
+### Hypotheses for the Difference of Two Population Means
+
+$H_0: \mu_1 - \mu_2 = 0 \quad H_a: \mu_1 - \mu_2 \neq 0$
+
+Where $\mu_1$ is the mean flipper length in mm for Adelie penguins on Palmer Archipelago, and $\mu_2$ is the mean flipper length in mm for Chinstrap penguins on Palmer Archipelago
+
+Before we proceed, we'll subset the data to just involve Adelie and Chinstrap penguins. This is only because we're not interested in Gentoo penguins for this question, so we'll take them out. 
+
+```{r penguinsSubset}
+penguinsSubset <- subset(penguins, species %in% c("Adelie", "Chinstrap"))
+```
+
+### Conditions for the Difference of Two Population Means 
+
+In order to use the $t$ distribution to construct confidence intervals and perform hypothesis tests for the difference in two means, we need some conditions to hold. **What are they?**
+
+1. *Condition 1*
+    a. independence within each group
+    b. independence BETWEEN each group
+2. *Condition 2*
+    a. observations of flipper length from Adelie penguins come from a nearly-normal population
+    b. observations of flipper length from Chinstrap penguins are from a nearly-normal population
+
+Let's check these conditions!
+
+1. *Condition 1*
+    a. Adelie penguins and Chinstrap penguins are randomly sampled (not sure here, proceed with caution)
+    b. Adelie penguins are separate from Chinstrap penguins because they are different species, so they must be independent of one another
+2. *Condition 2*
+    a. make a histogram of flipper length of sampled Adelie penguins, and look for a bell-shaped distribution
+    b. make a histogram of flipper length of sampled Chinstrap penguins, and look for a bell-shaped distribution
+
+```{r twoSampleNormal, error = T}
+hist(penguinsSubset$flipper_length_mm[penguinsSubset$species == "Adelie"],
+     main = "Histogram of Flipper Lengths of Adelie Penguins",
+     xlab = "Flipper Length in mm")
+
+hist(penguinsSubset$flipper_length_mm[penguinsSubset$species == "Chinstrap"],
+     main = "Histogram of Flipper Lengths of Chinstrap Penguins",
+     xlab = "Flipper Length in mm")
+```
+
+Each of the two histograms appear to be approximately bell-shaped, so Condition 2 is reasonably met.
+
+### Performing the t-test for the Difference in Two Population Means
+
+Okay, let's perform the t test! We're back to using **formula notation**. We need to tell R what variable represents the data we're using (the response variable) and which represents the groups. So the first argument to `t.test()` is now the *formula* which describes this information. The rest of the function works the same as before!
+
+```{r twoSampleT}
+t.test(flipper_length_mm ~ species,
+       data = penguinsSubset,
+       mu = 0,
+       alternative = "two.sided")
+```
+
+Note that the test statistic is $t = -5.6115$, and the p-value is so small it's nearly 0.
+
+### Conclusion for the Difference in Two Population Means Test
+
+We have _______________ (very strong / strong / some / little)
+evidence to suggest that there ______ (is/is not) a difference in the ____________ (mean/proportion) flipper length for the two groups, Adelie penguins and Chinstrap penguins.
+
+## Difference in two Population Means Confidence Interval
+
+Sometimes we are simply interested in estimating the parameter. 
+
+The parameter here is *replace this text with the parameter*.
+
+### Conditions for the Difference of Two Populations Means 
+
+The good news here is that the conditions are identical for a confidence interval and a hypothesis test. So we have already verified any necessary conditions.
+
+### Computing the Confidence Interval for the Difference in Two Population Means
+
+Let's compute a 90% confidence interval.
+
+```{r twoSampleCI}
+t.test(flipper_length_mm ~ species,
+       data = penguinsSubset,
+       conf.level = 0.9)
+```
+
+Notice that our 90% confidence interval has both *negative* values. What does this tell us about our data?
+
+We estimate with 90% confidence that the true flipper lengths for Adelie penguins are between 7.411 mm and 4.031 mm **shorter** than Chinstrap penguins, on average.
+
+## Code Cheat Sheet
+
+The formatting of this will be easier to read in the knitted version of the document.
+
+- **`plot_t()`**
+  - `df` refers to the degrees of freedom of the distribution to plot. You must provide this value.
+  - `shadeValues` is a vector of up to 2 numbers that define the region you want to shade
+  - `direction` can be one of `less`, `greater`, `beyond`, or `between`, and controls the direction of shading between `shadeValues`. Must be `less` or `greater` if `shadeValues` has only one element; `beyond` or `between` if two
+  - `col.shade` controls the color of the shaded region, defaults to `"cornflowerblue"`
+  - `...` lets you specify other graphical parameters to control the appearance of the normal curve (e.g., `lwd`, `lty`, `col`, etc.)
+- **`t.test(x, alternative = c("two.sided", "less", "greater"), mu = 0, conf.level = 0.95)`**
+  - `x` is a vector of data values OR a formula of the form *response ~ group* for two-sample t-tests.
+  - `alternative` specifies the direction of the alternative hypothesis; must be one of "two.sided", "less", or "greater"
+  - `mu` indicates the true value of the mean (under the null hypothesis); defaults to 0
+  - `conf.level` is the confidence level to be used in constructing a confidence interval; must be between 0 and 1, defaults to 0.95
+
